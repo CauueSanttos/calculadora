@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import {
   Container, 
@@ -12,6 +12,8 @@ import {
 
 export default function Calculator() {
   const [total, setTotal] = useState(0);
+  const [memoryNumber, setMemoryNumber] = useState(0);
+  const [operator, setOperator] = useState('');
 
   const [numberZero] = useState('0');
   const [numberOne] = useState('1');
@@ -29,11 +31,88 @@ export default function Calculator() {
   const [operatorMinus] = useState('-');
   const [operatorMore] = useState('+');
 
-  const [dot] = useState('.');
+  const [equal] = useState('=');
   const [clear] = useState('<');
 
-  function handleCalculate(item) {
-    console.log(item);
+  useEffect(() => {
+    setTotal(0);
+    setMemoryNumber(0);
+    setOperator('');
+  }, []);
+
+  function calculate() {
+    let calc;
+
+    switch (operator) {
+      case operatorMore: // +
+        calc = total + memoryNumber;
+        break;
+      case operatorMinus: // -
+        calc = memoryNumber - total;
+        break;
+      case operatorMultiplication: // *
+        calc = memoryNumber * total;
+        break;
+      case operatorDivison: // /
+        calc = memoryNumber / total;
+        break;
+    }
+
+    setTotal(calc);
+    setMemoryNumber(0);
+  }
+
+  function handleOperator(operator) {
+    setOperator(operator);
+    setMemoryNumber(total);
+    setTotal(0);
+  }
+
+  function handleVisor(number) {
+    let element = Number(number);
+
+    if (total > 0) {
+      setTotal(Number(`${total}${element}`));
+    } else {
+      setTotal(element);
+    }
+  }
+
+  function handleFunction(item) {
+    switch (item) {
+      case numberZero:
+      case numberOne:
+      case numberTwo:
+      case numberThree:
+      case numberFour:
+      case numberFive:
+      case numberSix:
+      case numberSeven:
+      case numberEigth:
+      case numberNine:
+        handleVisor(item);
+        break;
+      case operatorMore:
+        handleOperator(operatorMore);
+        break;
+      case operatorMinus:
+        handleOperator(operatorMinus);
+        break;
+      case operatorMultiplication:
+        handleOperator(operatorMultiplication);
+        break;
+      case operatorDivison:
+        handleOperator(operatorDivison);
+        break;
+      case equal:
+        calculate();
+        break;
+      case clear:
+        setTotal(0);
+        setMemoryNumber(0);
+        setOperator('');
+        break;
+    }
   }
 
   return (
@@ -43,58 +122,58 @@ export default function Calculator() {
       </Visor>
 
       <Area>
-        <Button onPress={() => { handleCalculate(numberSeven) }}>
+        <Button onPress={() => { handleFunction(numberSeven) }}>
           <TextButton value={numberSeven} editable={false} />
         </Button>
-        <Button onPress={() => { handleCalculate(numberEigth) }}>
+        <Button onPress={() => { handleFunction(numberEigth) }}>
           <TextButton value={numberEigth} editable={false} />
         </Button>
-        <Button onPress={() => { handleCalculate(numberNine) }}>
+        <Button onPress={() => { handleFunction(numberNine) }}>
         <TextButton value={numberNine} editable={false} />
         </Button>
-        <Button onPress={() => { handleCalculate(operatorDivison) }}>
+        <Button onPress={() => { handleFunction(operatorDivison) }}>
           <TextButtonAction value={operatorDivison} editable={false} />
         </Button>
       </Area>
       <Area>
-        <Button onPress={() => { handleCalculate(numberFour) }}>
+        <Button onPress={() => { handleFunction(numberFour) }}>
           <TextButton value={numberFour} editable={false} />
         </Button>
-        <Button onPress={() => { handleCalculate(numberFive) }}>
+        <Button onPress={() => { handleFunction(numberFive) }}>
           <TextButton value={numberFive} editable={false} />
         </Button>
-        <Button onPress={() => { handleCalculate(numberSix) }}>
+        <Button onPress={() => { handleFunction(numberSix) }}>
           <TextButton value={numberSix} editable={false} />
         </Button>
-        <Button onPress={() => { handleCalculate(operatorMultiplication) }}>
+        <Button onPress={() => { handleFunction(operatorMultiplication) }}>
           <TextButtonAction value={operatorMultiplication} editable={false} />
         </Button>
       </Area>
       <Area>
-        <Button onPress={() => { handleCalculate(numberOne) }}>
+        <Button onPress={() => { handleFunction(numberOne) }}>
           <TextButton value={numberOne} editable={false} />
         </Button>
-        <Button onPress={() => { handleCalculate(numberTwo) }}>
+        <Button onPress={() => { handleFunction(numberTwo) }}>
           <TextButton value={numberTwo} editable={false} />
         </Button>
-        <Button onPress={() => { handleCalculate(numberThree) }}>
+        <Button onPress={() => { handleFunction(numberThree) }}>
           <TextButton value={numberThree} editable={false} />
         </Button>
-        <Button onPress={() => { handleCalculate(operatorMinus) }}>
+        <Button onPress={() => { handleFunction(operatorMinus) }}>
           <TextButtonAction value={operatorMinus} editable={false} />
         </Button>
       </Area>
       <Area>
-        <Button onPress={() => { handleCalculate(dot) }}>
-          <TextButtonAction value={dot} editable={false} />
+        <Button onPress={() => { handleFunction(equal) }}>
+          <TextButtonAction value={equal} editable={false} />
         </Button>
-        <Button onPress={() => handleCalculate(numberZero)}>
+        <Button onPress={() => handleFunction(numberZero)}>
           <TextButton value={numberZero} editable={false} />
         </Button>
-        <Button onPress={() => { handleCalculate(clear) }}>
+        <Button onPress={() => { handleFunction(clear) }}>
           <TextButtonAction value={clear} editable={false} />
         </Button>
-        <Button onPress={() => { handleCalculate(operatorMore) }}>
+        <Button onPress={() => { handleFunction(operatorMore) }}>
           <TextButtonAction value={operatorMore} editable={false} />
         </Button>
       </Area>
