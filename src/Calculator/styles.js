@@ -31,11 +31,11 @@ export const Button = styled.TouchableOpacity`
   align-items: center;
 `;
 
-export const TextButton = styled.Text`
+export const TextButton = styled.TextInput`
   font-size: 25px;
 `;
 
-export const TextButtonAction = styled.Text`
+export const TextButtonAction = styled.TextInput`
   font-size: 25px;
   color: #01911e;
 `;
