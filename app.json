@@ -21,6 +21,13 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "android": {
+      "package": "com.devcaue.calculator",
+      "adaptiveIcon": {
+        "backgroundColor": "#01911e",
+        "foregroundImage": "./assets/icon.png"
+      }
+    },
     "ios": {
       "supportsTablet": true
     }
