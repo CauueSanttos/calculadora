@@ -60,12 +60,15 @@ export default function Calculator() {
 
     setTotal(calc);
     setMemoryNumber(0);
+    setOperator('');
   }
 
-  function handleOperator(operator) {
-    setOperator(operator);
-    setMemoryNumber(total);
-    setTotal(0);
+  function handleOperator(operatorEvent) {
+    if (operator === '') {
+      setOperator(operatorEvent);
+      setMemoryNumber(total);
+      setTotal(0);
+    }
   }
 
   function handleVisor(number) {
